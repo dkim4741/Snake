@@ -4,11 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * This model class will set the coordinates for the game grid, the snake, and the apple.
- * There will also be methods to update snake coordinates, apple position, the scores and arrow keys.
- */
-class GameModel implements GameItems{
+class GameModel {
     
     static final int TOTAL_GAME_AREA = 20;
     
@@ -27,10 +23,6 @@ class GameModel implements GameItems{
     private boolean reset = false;
     private boolean snakeIsDead = false;
     
-    /**
-	 * GameModel that creates a grid for the game starting. 
-	 * Apple created and snake parts created
-	 */
     public GameModel(){
         for (Cell[] cellgrid1 : cellgrid) {
             for (int j = 0; j < cellgrid1.length; j++) {
@@ -45,14 +37,14 @@ class GameModel implements GameItems{
         updateSnakeParts();
     }
     
-    /**
-	 * Apple position changes randomly in grid every time apple eaten
-	 */
+    
+    //changes the Position of the apple by randomly assigning cordinates
     public void changeApplePosition(){
         int x, y;
         x = new Random().nextInt(TOTAL_GAME_AREA-1);
         y = new Random().nextInt(TOTAL_GAME_AREA-1);
         
+        //to prevent overlapping of snake's coordinates and the apple's position
         if(snakeParts>0){
         while (SnakeCoordinates.contains(new Point(x, y))) {            
             x = new Random().nextInt(TOTAL_GAME_AREA-1);
@@ -62,62 +54,35 @@ class GameModel implements GameItems{
         this.applePosition = new Point(x, y);
     }
     
-    /**
-	 * Apple removed from grid. Used when game ends.
-	 */    public void removeApple(){
+    //remove Apple from the grid
+    public void removeApple(){
         
         this.applePosition = new Point(-1, -1);
     }
     
-	 /**
-		 * Updates snake's body 
-		 */
     public void updateSnakeParts(){
         this.snakeParts = SnakeCoordinates.size();
     }
-    
-    /**
-	 * Snake gets a new body part. 
-	 * @param int x for the horizontal position
-	 * @param int y for the vertical position
-	 */
+
+    //add new snakePart, x and y are the cordinates of the new part
     public void addNewSnakePart(int x, int y){
         this.SnakeCoordinates.add(new Point(x, y));
     }
     
-    /**
-	 * Snake coordinates change with position and coordinate values.
-	 * @param position for snake position
-	 * @param newX for x position when snake moves 
-	 * @param newY for y position when snake moves 
-	 */
+    //alter the coordinates of the snake parts at the necessary index
     public void altersnakecoordinates(int position, int newX, int newY){
         this.SnakeCoordinates.remove(position);
         this.SnakeCoordinates.add(position, new Point(newX, newY));
     }
     
-    /**
-	 * Gets the Cell grid
-	 */
     public Cell[][] getCellGrid(){
         return cellgrid;
     }
     
-    /**
-	 * Gets the type of component in cell.
-	 * @param int x for the horizontal position of cell type is
-	 * @param int y for the vertical position of cell type is
-	 */
     public int getCellType(int x, int y){
         return cellgrid[x][y].getCellType();
     }
     
-    /**
-	 * Sets a new cell type in grid.
-	 * @param int x for horizontal position to set cell component 
-	 * @param int y for vertical position to set cell component
-	 * @param int type for type to set cell component (0 = none, 1 = snake, 2 = apple)
-	 */
     void setCellType(int x, int y, int type){
         cellgrid[x][y].setCellType(y);
     }
@@ -127,6 +92,16 @@ class GameModel implements GameItems{
     public void setScore(int score){ this.currentScore = score;}
     public int getCurrentScore() {return currentScore;}
     
+    public int getHighScore() {
+		return highScore;
+	}
+
+
+	public void setHighScore(int highScore) {
+	
+			this.highScore = highScore;
+
+	}
  
     
     public void setArrowKey(String key){
@@ -145,6 +120,7 @@ class GameModel implements GameItems{
             this.currentArrow = Arrow.LEFT;
         }  
     }
+    //gets the user input
     public String getArrowKey(){
         return this.currentArrow.toString();
     }
@@ -154,10 +130,11 @@ class GameModel implements GameItems{
         return currentScore;
     }
     
-    public int incrementhighScore(){
-        highScore +=1;
-        return highScore;
+    public int incrementHighScore() {
+    	highScore++;
+    	return highScore;
     }
+    
     
     public int getGridHeight(){return cellgrid.length;}
     public int getGridWidth(){return cellgrid[0].length;}
@@ -169,7 +146,8 @@ class GameModel implements GameItems{
     public void setTimeInterval(int time){this.timeinteval = time;}
     
     public void snakeDies(){
-
+    //snakeIsDead boolean set to true when snake dies and snakecoordinates are reset to intial
+        //decrementLive();
     	this.snakeIsDead = true;
         this.snakeParts = 0;
         SnakeCoordinates.removeAll(SnakeCoordinates);
@@ -181,6 +159,7 @@ class GameModel implements GameItems{
     	return this.snakeIsDead;
     }
     
+    //reseting all the variables when Reset pressed
     public void ResetGame(){
         snakeDies();
         setScore(0);
@@ -281,16 +260,14 @@ class GameModel implements GameItems{
         changeApplePosition();
         incrementScore();
         updateSnakeParts();
+        
+        if(currentScore > highScore) {
+        	incrementHighScore();
+        }
     }
 
-	public int getHighScore() {
-		return highScore;
-	}
 
-
-	public void setHighScore(int highScore) {
-		this.highScore = highScore;
-	}
+	
     
     
 }
