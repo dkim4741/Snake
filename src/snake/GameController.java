@@ -8,11 +8,11 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
+/**
+ * This class will construct the visual and controlling environment for the game, setting the instructions
+ * to control the snake as well as the conditions for playing and finishing the game.
+ */
 class GameController {
-    
-    /*This class will construct the visual and controlling environment for the game, setting the instructions
-    to control the snake as well as the conditions for playing and finishing the game.*/
-    
     private final GameModel snakeGameModel;
     private final GameView snakeGameView;
     private final NorthGamePanel northpanel;
@@ -20,10 +20,10 @@ class GameController {
     
     private Timer gameTimer = null;
     
-    public GameController(GameModel snakeGameModel, GameView snakeView, NorthGamePanel npanel, SouthGamePanel spanel){
-        
-        /*Constructor for the class, including external elements to build the interface.*/
-        
+    /**
+     * Constructor for the class, including external elements to build the interface.
+     */
+    public GameController(GameModel snakeGameModel, GameView snakeView, NorthGamePanel npanel, SouthGamePanel spanel) {
         this.snakeGameModel = snakeGameModel;
         this.snakeGameView = snakeView;
         this.northpanel = npanel;
@@ -34,10 +34,10 @@ class GameController {
         initialpanelViewListeners();
     }
     
-    private void updateGameViewDisplay(){  
-        
-        /*This method will organize the playable interface and adjust the celling for the game.*/
-        
+    /**
+     * This method will organize the playable interface and adjust the celling for the game.
+     */
+    private void updateGameViewDisplay() {  
         int startx = 20;
         int starty = 20;
         double CellWidth = 20;
@@ -62,11 +62,11 @@ class GameController {
         snakeGameView.repaint();
         }
     
-    private void performOneStep(){
-        
-        /*This method ensures the score and highscore is updated if necessary,
-        and shows the Game Over message when the snake is dead.*/
-        
+    /**
+     * This method ensures the score and highscore is updated if necessary,
+     * and shows the Game Over message when the snake is dead.
+     */
+    private void performOneStep() {
         snakeGameModel.NextStep();
         southpanel.setScoreLabel(snakeGameModel.getCurrentScore());
         southpanel.setHighScoreLabel(snakeGameModel.getHighScore());
@@ -89,12 +89,11 @@ class GameController {
 
     }
     
-    
-    private void initialpanelViewListeners(){
-        
-        /*This method includes the instructions to control the snake all over the interface
-        of the game, as well as the controls to exit the game.*/
-        
+    /**
+     * This method includes the instructions to control the snake all over the interface
+     * of the game, as well as the controls to exit the game.
+     */
+    private void initialpanelViewListeners() {
         northpanel.addPlayButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
