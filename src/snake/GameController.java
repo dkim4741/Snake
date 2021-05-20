@@ -8,8 +8,10 @@ import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-
 class GameController {
+    
+    /*This class will construct the visual and controlling environment for the game, setting the instructions
+    to control the snake as well as the conditions for playing and finishing the game.*/
     
     private final GameModel snakeGameModel;
     private final GameView snakeGameView;
@@ -19,6 +21,9 @@ class GameController {
     private Timer gameTimer = null;
     
     public GameController(GameModel snakeGameModel, GameView snakeView, NorthGamePanel npanel, SouthGamePanel spanel){
+        
+        /*Constructor for the class, including external elements to build the interface.*/
+        
         this.snakeGameModel = snakeGameModel;
         this.snakeGameView = snakeView;
         this.northpanel = npanel;
@@ -30,6 +35,9 @@ class GameController {
     }
     
     private void updateGameViewDisplay(){  
+        
+        /*This method will organize the playable interface and adjust the celling for the game.*/
+        
         int startx = 20;
         int starty = 20;
         double CellWidth = 20;
@@ -56,6 +64,9 @@ class GameController {
     
     private void performOneStep(){
         
+        /*This method ensures the score and highscore is updated if necessary,
+        and shows the Game Over message when the snake is dead.*/
+        
         snakeGameModel.NextStep();
         southpanel.setScoreLabel(snakeGameModel.getCurrentScore());
         southpanel.setHighScoreLabel(snakeGameModel.getHighScore());
@@ -80,6 +91,10 @@ class GameController {
     
     
     private void initialpanelViewListeners(){
+        
+        /*This method includes the instructions to control the snake all over the interface
+        of the game, as well as the controls to exit the game.*/
+        
         northpanel.addPlayButtonListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
