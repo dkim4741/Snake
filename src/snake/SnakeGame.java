@@ -12,6 +12,7 @@ public class SnakeGame {
       EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {  
+                // Creates the visual frame for the game.
                 GameFrame frame = new GameFrame();
                 frame.setVisible(true);
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,6 +37,8 @@ class GameFrame extends JFrame{
     
 
     public GameFrame() {
+        
+        // Includes every element of the game into the game frame
         
         snakeGameView = new GameView();
         add(snakeGameView, BorderLayout.CENTER);
